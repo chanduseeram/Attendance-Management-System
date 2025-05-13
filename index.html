@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="AMS">
+		<meta name="description" content="Mark your attendance here to simplify and to easier your work.">
+		<meta name="keywords" content="attendance management system, ams, attendance, college, school, online attendance, register,gvp">
+		<meta property="og:title" content="Attendance Management System">
+		<meta property="og:description" content="Mark your attendance here to simplify and to easier your work">
+		<meta property="og:image" content="/amsLogo.png">
+		<meta name="twitter:title" content="Attendance Management System">
+		<meta name="twitter:description" content="Mark your attendance here to simplify and to easier your work.">
+		<meta property="twitter:image" content="/amsLogo.png">
+		<title>Attendance Management System</title>
+		<link rel="icon" type="image" href="collegelogo.png">
+		<link href="index_styles.css" rel="stylesheet" type="text/css">	
+		<script type="text/javascript">
+			function openRegisterModal() {
+				document.getElementById("registerModel").style.display = "block";
+			}
+
+			function closeRegisterModal() {
+				document.getElementById("registerModel").style.display = "none";
+			}
+			function validateform(event) {
+				event.preventDefault();
+				var faculty_id = document.getElementById("fidnew");
+				var pattern=/^FA\d{6,8}$/;
+				var pwd=document.getElementById("pwdnew").value;
+				var cpwd=document.getElementById("confirmPassword").value;
+				if(!pattern.test(faculty_id.value)){
+					alert("You're Not Authorized to Register Here");
+					faculty_id.focus();
+					return false;
+				}
+				if(pwd!=cpwd) {
+					alert("Password mismatch");
+					document.getElementById("confirmPassword").focus();
+					window.location.href="index.html";
+					return false;
+				}
+				return true;
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<div id="logo"> <img src="collegelogo.png" height="100" width="100" alt="Page Logo"></div>
+			<div><h3 style="font-size: 30px; margin-right: 150px; word-spacing: 10px;">ATTENDANCE MANAGEMENT SYSTEM</h3></div>
+			<ul class="nav-links">
+				<li><button onclick="openRegisterModal()">Faculty Register</button></li>
+				<li><button onclick="openModal()">Forgot Password?</button></li>
+				<li><a href="checkingAttendance.html" style="text-decoration: none;"><button style="margin-right: 20px;">Check Your Attendance</button></a></li>
+			 </ul>
+		</div>
+		<br><br><br><br>
+		<div id="main_box">
+			<center>
+				<u style="text-decoration: underline solid gold;"><h1 id="login" style="font-size: 38px; color:gold; text-shadow: 3px 0px 6px rgba(0, 0, 0.5);" ><b>Login into your Account</b></h1></u><br><br><br><br>
+				<form id="loginform" action="login.jsp" method="post">
+				<h2 style="margin-right: 30px; display: inline; font-size: 26px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0.5);" >Enter Faculty ID</h2><input type="text" class="input_box" id="login_name" name="uid" required/><br><br><br>
+				<h2 style="margin-right: 37px; display: inline; font-size: 26px; color: white; text-shadow: 3px 3px 6px rgba(0, 0, 0.5);">Enter Password</h2><input type="password" class="input_box" id="login_password" name="pwd" required/><br><br><br>
+				<input type="submit" value="Login" class="submit_button"/>
+			    </form>
+			</center>	  
+		</div>
+		
+		<div id="footer">
+			<h3 style="margin-right:60px; color:aqua;">Contact us</h3>
+			<span class="footerspan">+91 7013074531</span>&nbsp;&nbsp;<span class="footerspan">attendanceproject1@gmail.com</span class="footerspan">&nbsp;&nbsp;<span class="footerspan">Gvp colllege, Rushikonda</span><br>
+			<label style="font-size:12px; margin-top:20px; margin-right:50px; margin-bottom:0px; ">&copy; 2024-2025 GVP All rights reserved.</label>
+		</div>
+		<div id="registerModel" class="modal">
+			<div class="modal-content">
+			  <span class="close" onclick="closeRegisterModal()">&times;</span>
+			  <h2>Faculty Register</h2>
+			  <form id="registrationForm" action="register.jsp" method="post" onsubmit="return validateform(event)">
+				<input type="text" id="fnamenew" name="fnamenew" placeholder="Your name" required style="width: 370px;">
+				<input type="text" id="fidnew" name="fidnew" placeholder="Faculty ID" required style="width: 370px;">
+				<input type="email" id="mailnew" name="mailnew" placeholder="Email Address" required style="width: 370px;">
+				<div class="phone-group">
+				<input style="width: 75px; display: inline;" value="+91" readonly/>
+				 <input type="tel" id="phonenew" name="phonenew" placeholder="Phone Number" maxlength="10" pattern="[0-9]{10}" required style="width: 265px;">
+				</div>
+				<input type="password" id="pwdnew" name="pwdnew" placeholder="Password" required style="width: 370px;">
+				<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required style="width: 370px;">
+				<button type="submit">Create Account</button>
+				<button type="reset">Clear</button>
+			  </form>
+			</div>
+		  </div>
+		  
+	</body>
+</html>
