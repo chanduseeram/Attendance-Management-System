@@ -80,7 +80,7 @@
     </div>
 
     <script>
-        var percentage = parseFloat(<%= percentage %>);
+        var percentage = parseFloat("<%= percentage %>");
         var result = "";
         if (percentage >= 75) {
             result = "----You have eligible attendance percentage----";
