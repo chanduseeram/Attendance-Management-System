@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Tracking System</title>
     <link href="attandance_styles.css" rel="stylesheet">
-    <link rel="icon" type="image" href="collegelogo.png">
+    <link rel="icon" type="image" href="logo.png">
     </head>
 <body>
     <div id="header">
-			<div id="logo"> <img src="collegelogo.png" height="100" width="100" alt="Page Logo"></div>
+			<div id="logo"> <img src="logo.png" height="100" width="150" alt="Page Logo"></div>
 			<div><h3 style="font-size: 30px; margin-right: 150px; word-spacing: 10px;">ATTENDANCE MANAGEMENT SYSTEM</h3></div>
 		</div>
     <br>
     <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;">MCA Department 2024 - 2026</h2></center>
     <br>
     <center><h2 style="color:red; font-size: 25px; ">Mark the Attandance</h2></center><br>
-    <h2 style="margin: 18px 20px 0px 100px; display: inline;">Today Date :</h2><h2 id="todaydate" style="margin: 0px; padding: opx; display: inline; color: brown;"></h2><br><br>
+    <h2 style="margin: 18px 20px 0px 100px; display: inline;">Today Date :</h2><h2 id="todaydate" name="todaydate" style="margin: 0px; padding: opx; display: inline; color: brown;"></h2><br><br>
     <form id="attandance" action="main_attendance.jsp" method="POST" name="attandancemain" onsubmit="return check()">
     <h2 style="display: inline;  margin-left: 100px;">Select Date :</h2><input style="margin-left: 20px; font-size: 17px; color: black; padding: 5px 5px; height: 23px;" placeholder="Format : DD_MM_YYYY" type="text" id="getdatevalue"name="getdatevalue"><br><br>
     <h2 style="display: inline; margin-left: 100px; margin-right: 20px;">Select Subject :</h2>
     <select id="subject" name="subject" style="width: 200px; padding: 5px 5px; font-size: 16px;">
+      <option value="" disabled selected hidden>Select Subject</option>
       <option value="FLAT">FLAT</option>
       <option value="Ccomputer Networks">Computer Networks</option>
       <option value="DBMS">DBMS</option>
@@ -36,7 +37,7 @@
     </select>
     <br><br><br>
     <div class="row">
-        <label class="student"><input type="checkbox" name="1"><span class="number">1.</span> A. Krishna Prabha</label>
+        <label class="student"><input type="checkbox" name="1" value="1"><span class="number">1.</span> A. Krishna Prabha</label>
         <label class="student"><input type="checkbox" name="2"><span class="number">2.</span> A. Sai Saranya</label>
         <label class="student"><input type="checkbox" name="3"><span class="number">3.</span> B. Harish</label>
       </div>
@@ -158,7 +159,7 @@
     </div>
     <div id="footer">
 			<h3 style="margin-right:60px; color:aqua;">Contact us</h3>
-			<span class="footerspan">+91 7013074531</span>&nbsp;&nbsp;<span class="footerspan">attendanceproject1@gmail.com</span class="footerspan">&nbsp;&nbsp;<span class="footerspan">Gvp colllege, Rushikonda</span><br>
+			<span class="footerspan">Phone : +91 7013074531</span>&nbsp;&nbsp;<span class="footerspan">attendanceproject1@gmail.com</span class="footerspan">&nbsp;&nbsp;<span class="footerspan">Gvp colllege, Rushikonda</span><br>
 			<label style="font-size:12px; margin-top:20px; margin-right:50px; margin-bottom:0px; ">&copy; 2024-2025 GVP All rights reserved.</label>
 		</div>
     <script>

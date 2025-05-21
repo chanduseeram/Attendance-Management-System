@@ -12,30 +12,18 @@ try
     {
     String name,password;
 
-    name=request.getParameter("uid");
-    password=request.getParameter("pwd");
+    name=request.getParameter("FloginID");
+    password=request.getParameter("FloginPass");
     Class.forName("oracle.jdbc.OracleDriver");
     Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");
     PreparedStatement ps=con.prepareStatement("select ID, password from faculty_register_table where id=? and password=?");
     ps.setString(1,name);
     ps.setString(2,password);
     ResultSet rs=ps.executeQuery();
-
-    PreparedStatement printname = con.prepareStatement("SELECT name FROM faculty_register_table WHERE id=?");
-    printname.setString(1, name);
-    ResultSet rsName = printname.executeQuery();
-
-
     if(rs.next())
     {
         if(name.equals(rs.getString(1)) && password.equals(rs.getString(2)))
         {
-            String facultyName = "";
-            if (rsName.next()) 
-            {
-                facultyName = rsName.getString("name");
-            }
-            session.setAttribute("facultyName", facultyName);
             response.sendRedirect("home.html");	 
         }
         
@@ -45,6 +33,8 @@ try
         out.println("<script>alert('Invalid Login details')</script>");
     }
 	con.close();
+    ps.close();
+    rs.close();
 	
     }
 catch(Exception ex)
