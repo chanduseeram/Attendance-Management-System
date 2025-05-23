@@ -27,12 +27,24 @@
 
             int k = 0;
             for (int i = 1; i <= 64; i++) {
-                String checkboxValue = request.getParameter(String.valueOf(i));
-                int attendance = (checkboxValue != null) ? 1 : 0;
-                ps.setInt(1, i);
-                ps.setString(2, date);
-                ps.setInt(3, attendance);
-                k += ps.executeUpdate();
+                if(sub.equals("CN Lab") || sub.equals("WP Lab") || sub.equals("DBMS Lab")){
+                	for(int j=1; j<=3; j++){
+                    	String checkboxValue = request.getParameter(String.valueOf(i));
+                    	int attendance = (checkboxValue != null) ? 1 : 0;
+                    	ps.setInt(1, i);
+                    	ps.setString(2, date);
+                    	ps.setInt(3, attendance);
+                    	k += ps.executeUpdate();
+                	}
+                }
+                else {
+                    String checkboxValue = request.getParameter(String.valueOf(i));
+                    int attendance = (checkboxValue != null) ? 1 : 0;
+                    ps.setInt(1, i);
+                    ps.setString(2, date);
+                    ps.setInt(3, attendance);
+                    k += ps.executeUpdate();
+                }
             }
             if (k > 0) {
             	out.println("<script>alert('Attendance submitted successfully!'); window.location.href='index.html';</script>");
