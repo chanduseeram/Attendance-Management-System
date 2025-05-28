@@ -12,7 +12,7 @@
     <div id="header">
         <div id="logo"> <img src="logo.png" height="100" width="150" alt="Page Logo"></div>
         <div><h3 style="font-size: 30px; margin-right: 150px; word-spacing: 10px;">ATTENDANCE MANAGEMENT SYSTEM</h3></div>
-        <a style="background-color: transparent;" href="SelectDepartment.html"><button style="background-color: #001D3D; ">Check Entire Attandance</button></a>
+        <a style="background-color: transparent;" href="SelectDepartment.html"><button style="background-color: #001D3D; ">Check Entire Attendance</button></a>
     </div>
     <br><br><br><br><br><br>
 

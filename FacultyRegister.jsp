@@ -31,7 +31,7 @@ pageEncoding="ISO-8859-1"%>
 
                 int n = ps.executeUpdate();
                 if(n>0){
-                	out.println("<script>alert('Registration successful..!'); window.location.href='index.html';</script>");
+                	out.println("<script>alert('Registration successful..!'); window.location.href='admin.html';</script>");
                 }
                 else {
                     out.println("<script>alert('Failed to register')</script>");

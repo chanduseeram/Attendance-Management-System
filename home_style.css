@@ -6,11 +6,10 @@
     color: white;
 }
 
-.bodyTag {
+.bodytag {
   height: 100%;
   width:100%;
   overflow-x:hidden;
-  background-image: url("bagrounddark.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -67,6 +66,10 @@ button {
     position:fixed;
     text-align:center;
     color:white;
+}
+
+h1 {
+	color:black;
 }
 
 .footerspan{
@@ -191,8 +194,4 @@ a {
 }
 .modal-content button[type="reset"]:hover {
   background: #d1cccc;
-}
-
-#hiddenSem {
-  display: none;
 }

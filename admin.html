@@ -23,12 +23,18 @@
 			}
             function validateform() {
 				var faculty_id = document.getElementById("fidnew");
+				var facultyChange_id = document.getElementById("FchangeID");
 				var pattern=/^FA\d{6,8}$/;
 				var pwd=document.getElementById("pwdnew").value;
 				var cpwd=document.getElementById("confirmPassword").value;
 				if(!pattern.test(faculty_id.value)){
 					alert("You're Not Authorized to Register Here");
 					faculty_id.focus();
+					return false;
+				}
+				if(!pattern.test(facultyChange_id.value)){
+					alert("Enter Correct Faculty ID");
+					facultyChange_id.focus();
 					return false;
 				}
 				if(pwd!=cpwd) {
@@ -60,10 +66,54 @@
 				<li><a href="checkingAttendance.html" style="text-decoration: none;"><button style="margin-right: 20px;">Check student Attendance</button></a></li>
 			 </ul>
 		</div>
-		<br><br><br><br>
 		<div class="Div">
-			<button class="btnadmin" onclick="openF_RegisterModal()" style="margin-left: 0px;">Faculty Registration</button>
+			<button class="btnadmin" onclick="openF_RegisterModal()">Faculty Registration</button>
 			<button class="btn2admin" onclick="openS_RegisterModal()">Student Registration</button><br>
+		</div>
+		<br><br><br><br><br>
+		<div style="display:flex; flex-direction:row; justify-content:center; align-items:center;">
+		<div class="features">
+			<br>
+			<span>Before adding new batch Student Details..</span><br>
+			<span>Create a new Table in DataBase</span><br>
+			<span>By Entering Years of their joining</span><br>
+			<span>Example : 2024-2025 then Type : "2425"</span><br><br>
+			<form id="feature1" name="feature1" action="features.jsp" method="post">
+				<select id="fdepartment" name="fdepartment" style="color: black; font-size: 14px; padding: 5px 5px; border-radius:10px;" required>
+                    <option value="" disabled selected hidden>Department</option>
+                    <option value="mca">MCA</option>
+                    <option value="msc">M.Sc</option>
+                    <option value="bca">BCA</option>
+                    <option value="mba">MBA</option>
+                 </select>
+				<input type="tel" id="Jyear" name="Jyear" maxlength="4" pattern="[0-9]{4}" required placeholder="Year" style="height:7px; width: 60px; font-size:16px; padding: 10px 10px; text-align:center;" />
+				<button type="submit" style="background-color: green; padding:3px 15px;">Create</button>
+			</form>
+		</div>
+		<div class="features" style="padding-top:15px; padding-bottom:5px; height:153px;">
+			<span style="font-size:17px;">Want to Update Faculty password?</span>
+			<form id="changes" name="changes" action="features.jsp" method="post">
+                 <input type="text" id="FchangeID" name="FchangeID" placeholder="Your Faculty ID" required style="width: 100px; padding:5px; font-size:14px; margin-top:10px;">
+                 <input type="text" id="FchangePass" name="FchangePass" placeholder="New password" required style="width: 100px; padding:5px; font-size:14px;">
+				<button type="submit" style="background-color: green; padding:3px 10px;">Change</button>
+			</form>
+			<br>
+			<span style="font-size:17px; margin-bottom:10px;">Want to Update Faculty Department?</span>
+			<form id="changes" name="changes" action="features.jsp" method="post">
+                 <input type="text" id="FchangeID2" name="FchangeID2" placeholder="Your Faculty ID" required style="width: 100px; padding:5px; font-size:14px; margin-top:10px;">
+                 <select id="fdepartmentChange" name="fdepartmentChange" style="color: black; font-size: 13px; width:130px; padding:4px 1px; border-radius:10px;" required>
+                    <option value="" disabled selected hidden>New Department</option>
+                    <option value="mca">MCA</option>
+                    <option value="msc">M.Sc</option>
+                    <option value="bca">BCA</option>
+                    <option value="mba">MBA</option>
+                    <option value="mcaANDmsc">MCA and M.Sc</option>
+                    <option value="mcaANDmba">MCA and MBA</option>
+                    <option value="mcaANDbcaANDmsc">MCA and BCA and M.Sc</option>
+                </select>
+				<button type="submit" style="background-color: green; padding:3px 10px;">Change</button>
+			</form>
+		</div>
 		</div>
         <div id="FregisterModel" class="modal">
 			<div class="modal-content">
@@ -80,8 +130,12 @@
                 <select id="fdepartment" name="fdepartment" style="color: black; font-size: 16px;" required>
                     <option value="" disabled selected hidden>Select Department</option>
                     <option value="mca">MCA</option>
-                    <option value="msc">MSC</option>
+                    <option value="msc">M.Sc</option>
+                    <option value="bca">BCA</option>
                     <option value="mba">MBA</option>
+                    <option value="mcaANDmsc">MCA and M.Sc</option>
+                    <option value="mcaANDmba">MCA and MBA</option>
+                    <option value="mcaANDbcaANDmsc">MCA and BCA and M.Sc</option>
                 </select>
 				<input type="password" id="pwdnew" name="pwdnew" placeholder="Password" required style="width: 370px;">
 				<button type="submit">Create Account</button>
@@ -102,12 +156,14 @@
 				<input style="width: 75px; display: inline; margin-right: 5px;" value="+91" readonly/>
 				<input type="tel" id="sphone" name="sphone" placeholder="Student Phone Number" maxlength="10" pattern="[0-9]{10}" required style="width: 260px; margin-right: 0px;">
 				</div>
-				<select id="sdepartment" name="sdepartment" style="color: black; font-size: 16px;" required>
+				<select id="sdepartment" name="sdepartment" style="color: black; font-size: 16px; width:180px; display:inline; padding-right:2px;" required>
                     <option value="" disabled selected hidden>Select Department</option>
                     <option value="mca">MCA</option>
                     <option value="msc">MSC</option>
                     <option value="mba">MBA</option>
+                    <option value="bca">BCA</option>
                 </select>
+                <input type="tel" id="Syear" name="Syear" placeholder="Enter Joining Year : '2x2x'" maxlength="4" pattern="[0-9]{4}" required style="width: 198px; font-size:16px; padding-right:0px;">
 				<button type="submit">Register</button>
 				<button type="reset">Clear</button>
 			  </form>
@@ -116,7 +172,7 @@
 
           <div id="footer">
 			<h3 style="margin-right:60px; color:aqua;">Contact us</h3>
-			<span class="footerspan">Phone : +91 7013074531</span>&nbsp;&nbsp;<span class="footerspan">attendanceproject1@gmail.com</span class="footerspan">&nbsp;&nbsp;<span class="footerspan">Gvp colllege, Rushikonda</span><br>
+			<span class="footerspan">Phone : +91 7013074531</span>&nbsp;&nbsp;<span class="footerspan">attendanceproject1@gmail.com&nbsp;&nbsp;<span class="footerspan">Gvp colllege, Rushikonda</span><br>
 			<label style="font-size:12px; margin-top:20px; margin-right:50px; margin-bottom:0px; ">&copy; 2024-2025 GVP All rights reserved.</label>
 		</div>
 </body>

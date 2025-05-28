@@ -27,6 +27,18 @@
   border:4px solid gold;
 }
 
+.features {
+	height:160px;
+	width:350px;
+	padding: 5px 5px;
+	background-color: #001D3D;
+	color: white;
+	margin-left: 60px;
+	text-align:center;
+	border-radius:10px;
+}
+
+
 .btn2 {
   background-color: #001D3D;
   margin-left: 100px;
@@ -46,7 +58,8 @@
 
 .btnadmin {
   background-color: #001D3D;
-  margin-right: 450px;
+  margin-right: 50px;
+  margin-left: 300px;
   font-size: 24px;
   padding: 15px 25px;
   border:4px solid gold;
@@ -54,7 +67,7 @@
 
 .btn2admin {
   background-color: #001D3D;
-  margin-left: 240px;
+  margin-left: 40px;
   font-size: 24px;
   padding: 15px 25px;
   border:4px solid aqua;
@@ -258,7 +271,3 @@ button {
 .modal-content button[type="reset"]:hover {
   background: #d1cccc;
 }  
-
-.hiddenSem {
-  display: none;
-}
