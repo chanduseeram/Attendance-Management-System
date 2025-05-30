@@ -37,13 +37,6 @@
 					facultyChange_id.focus();
 					return false;
 				}
-				if(pwd!=cpwd) {
-					alert("Password mismatch");
-					document.getElementById("confirmPassword").focus();
-					window.location.href="index.html";
-					return false;
-				}
-				return true;
 			}
 
             function check() {
@@ -62,9 +55,6 @@
     <div id="header">
 			<div id="logo"> <img src="logo.png" height="100" width="150" alt="Page Logo"></div>
 			<div><h3 style="font-size: 30px; margin-right: 120px; word-spacing: 10px;">ATTENDANCE MANAGEMENT SYSTEM</h3></div>
-			<ul class="nav-links">
-				<li><a href="checkingAttendance.html" style="text-decoration: none;"><button style="margin-right: 20px;">Check student Attendance</button></a></li>
-			 </ul>
 		</div>
 		<div class="Div">
 			<button class="btnadmin" onclick="openF_RegisterModal()">Faculty Registration</button>
@@ -79,7 +69,7 @@
 			<span>By Entering Years of their joining</span><br>
 			<span>Example : 2024-2025 then Type : "2425"</span><br><br>
 			<form id="feature1" name="feature1" action="features.jsp" method="post">
-				<select id="fdepartment" name="fdepartment" style="color: black; font-size: 14px; padding: 5px 5px; border-radius:10px;" required>
+				<select id="fdepartmentN" name="fdepartmentN" style="color: black; font-size: 14px; padding: 5px 5px; border-radius:10px;" required>
                     <option value="" disabled selected hidden>Department</option>
                     <option value="mca">MCA</option>
                     <option value="msc">M.Sc</option>
@@ -127,7 +117,7 @@
 				<input style="width: 75px; display: inline;" value="+91" readonly/>
 				 <input type="tel" id="phonenew" name="phonenew" placeholder="Phone Number" maxlength="10" pattern="[0-9]{10}" required style="width: 265px;">
 				</div>
-                <select id="fdepartment" name="fdepartment" style="color: black; font-size: 16px;" required>
+                <select id="fdepartmentR" name="fdepartmentR" style="color: black; font-size: 16px;" required>
                     <option value="" disabled selected hidden>Select Department</option>
                     <option value="mca">MCA</option>
                     <option value="msc">M.Sc</option>
@@ -173,7 +163,7 @@
           <div id="footer">
 			<h3 style="margin-right:60px; color:aqua;">Contact us</h3>
 			<span class="footerspan">Phone : +91 7013074531</span>&nbsp;&nbsp;<span class="footerspan">attendanceproject1@gmail.com&nbsp;&nbsp;<span class="footerspan">Gvp colllege, Rushikonda</span><br>
-			<label style="font-size:12px; margin-top:20px; margin-right:50px; margin-bottom:0px; ">&copy; 2024-2025 GVP All rights reserved.</label>
+			<center><label style="font-size:12px; margin-top:20px; margin-right:50px; margin-bottom:0px; ">&copy; 2024-2025 GVP All rights reserved.</label></center>
 		</div>
 </body>
 </html>

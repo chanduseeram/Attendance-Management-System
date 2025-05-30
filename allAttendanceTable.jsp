@@ -70,6 +70,10 @@
 	    update.style.left="0";
 	    update.style.width="100%";
   	}
+  	function hide(){
+  		document.getElementById("originalNew").style.display ="none";
+  	}
+  	
   </script>
 </head>
 <body style = "background-color:white !important;">
@@ -82,11 +86,35 @@
     </div>
 	<br><br><br> 
 	<center>
+		<div id="originalNew" name="originalNew" class="percentagebox" style="height:120px; padding:5px 20px; margin-left:220px; width:700px;">
+            <form id="formNew" name="formNew" method="post" onsubmit="return hide()"><br>
+                <h3 style="padding: 3px 10px; color:black; display: inline;">Enter department</h3>
+                <select id="departmentNew" name="departmentNew" style="color: black; font-size: 16px; padding: 5px 15px; border-radius:10px;" required>
+                    <option value="" disabled selected hidden>Department</option>
+                    <option value="mca">MCA</option>
+                    <option value="msc">M.Sc</option>
+                    <option value="bca">BCA</option>
+                    <option value="mba">MBA</option>
+                 </select>
+                <h3 style="padding: 3px 10px; color:black; display: inline; margin-left:40px;">Enter semester</h3>
+                <select id="semesterNew" name="semesterNew" style="color: black; font-size: 16px; padding: 5px 15px; border-radius:10px;" required>
+                    <option value="" disabled selected hidden>Semester</option>
+                    <option value="1sem">1st sem</option>
+                    <option value="2sem">2nd sem</option>
+                    <option value="3sem">3rd sem</option>
+                    <option value="4sem">4th sem</option>
+                    <option value="5sem">5th sem</option>
+                    <option value="6sem">6th sem</option>
+                 </select><br><br>
+                <center><input type="submit" value="Check" style="width: 110px; background-color: greenyellow; font-weight: 600; margin-top:10px; padding-right:10px; border-radius: 10px;"/></center>
+            </form>
+         </div><br><br><br>
+	<center>
 	<div style="justify-content:center; align-items:center;">
 		<input id="searchInput" type="text" placeholder="Search for a student" onkeyup="filterTable()" style="justify-content:center; align-items:center; width:220px; height:30px; padding: 5px 0px 5px 50px; "/>
 	</div>
 	</center><br><br>
-	<table style="color: #001D3D;">
+	<table id="tableMain" style="color: #001D3D; margin-right:200px;">
 	<thead>	
     <tr>
       <th>Student Name</th>
@@ -100,17 +128,34 @@
     <tbody id="dataBody">
 <%
 try {
-    Class.forName("oracle.jdbc.OracleDriver");
+	Class.forName("oracle.jdbc.OracleDriver");
     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "AP", "chandukittu");
-    String sql = "SELECT ar.student_name AS s_name, ar.student_id AS s_id, " +
+    
+	String dept = request.getParameter("departmentNew");
+	String sem = request.getParameter("semesterNew");
+	if (dept != null && sem != null) {
+	int joiningYear = 2425;
+	String deptFull = dept + sem;
+    PreparedStatement ps2 = con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
+    
+        ps2.setString(1, deptFull.toLowerCase());
+    
+    ResultSet rs12 = ps2.executeQuery();
+    if(rs12.next()){
+    	joiningYear = rs12.getInt("jyear");
+    }
+	
+    
+    String sql = "SELECT sr.s_name, sr.s_id, " +
                  "COUNT(*) AS total_days, " +
-                 "SUM(sar.status) AS present_days, " +
-                 "ROUND(SUM(sar.status) * 100.0 / COUNT(*), 2) AS percentage " +
-                 "FROM attendance_register ar " +
-                 "JOIN student_attendance_register sar ON ar.s_no = sar.s_no " +
-                 "GROUP BY ar.student_name, ar.student_id " +
-                 "ORDER BY ar.student_id";
+                 "SUM(ar.status) AS present_days, " +
+                 "ROUND(SUM(ar.status) * 100.0 / COUNT(*), 2) AS percentage " +
+                 "FROM student_register_"+ dept +"_"+ joiningYear +" sr " +
+                 "JOIN attendance_"+ deptFull +"_"+ joiningYear +" ar ON sr.s_no = ar.s_no " +
+                 "GROUP BY sr.s_name, sr.s_id " +
+                 "ORDER BY sr.s_id";
 
+	
     PreparedStatement ps = con.prepareStatement(sql);
     ResultSet rs = ps.executeQuery();
 
@@ -120,7 +165,6 @@ try {
         int total_days_count = rs.getInt("total_days");
         int present_days = rs.getInt("present_days");
         double percentage = rs.getDouble("percentage");
-
         String statusText = percentage >= 75 ? "Eligible" : "Not eligible";
         String color = percentage >= 75 ? "green" : "red";
 %>
@@ -130,14 +174,16 @@ try {
   <td><%= total_days_count %></td>
   <td><%= present_days %></td>
   <td><%= percentage %>%</td>
-  <td class="<%= percent >= 75 ? "eligible" : "not-eligible" %>"><%= statusText %></td>
+  <td style="color:<%= color %>;"><%= statusText %></td>
 </tr>
 <%
     }
-
+	
     rs.close();
     ps.close();
     con.close();
+    
+	}
 } catch (Exception ex) {
     out.println("<script>alert('Error at: " + ex.getMessage() + "')</script>");
 }

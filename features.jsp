@@ -10,7 +10,7 @@
 <%
 try {
     String Fid, Fid2, update,update2, dept, year;
-    dept=request.getParameter("fdepartment");
+    dept=request.getParameter("fdepartmentN");
     year=request.getParameter("Jyear");
     Fid=request.getParameter("FchangeID");
     Fid2=request.getParameter("FchangeID2");
@@ -21,6 +21,8 @@ try {
     Statement stmt = con.createStatement();
     if(dept!=null && year!=null) {
     	String tableName = "student_register_" + dept + "_" + year;
+    	String A_tableName = "attendance_" + dept + "1sem_" + year;
+    	String Sub_tableName = "classes_" + dept + "1sem_" + year;
         String sequenceName = "seq_" + dept + "_" + year;
         String triggerName = "trg_" + dept + "_" + year;
 
@@ -41,10 +43,22 @@ try {
                                " BEGIN " +
                                " SELECT " + sequenceName + ".NEXTVAL INTO :NEW.S_NO FROM dual; " +
                                " END;";
-
+                               
+        String createATable = "CREATE TABLE " + A_tableName + " (" +
+                   					"S_NO NUMBER NOT NULL, " +
+                   					"class_Date varchar2(20) NOT NULL, " +
+                   					"Status NUMBER )";
+        
+        String createSubTable = "CREATE TABLE " + Sub_tableName + " (" +
+					"Subject varchar2(30) NOT NULL, " +
+					"Class_Date varchar2(20), " +
+					"class_Status NUMBER )";
+        
         stmt.executeUpdate(createTable);
         stmt.executeUpdate(createSequence);
         stmt.executeUpdate(createTrigger);
+        stmt.executeUpdate(createATable);
+        stmt.executeUpdate(createSubTable);
         out.println("<script>alert('Table created..!'); window.location.href='admin.html';</script>");
     }
     
@@ -79,6 +93,7 @@ try {
     con.close();
 }
 catch(Exception ex){
+	ex.printStackTrace(); 
     out.println("<script>alert('Error at :"+ex.getMessage()+"')</script>");
 }
 %> 

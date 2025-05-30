@@ -17,7 +17,7 @@ pageEncoding="ISO-8859-1"%>
                 phone = request.getParameter("phonenew");
                 mail = request.getParameter("mailnew");
                 password = request.getParameter("pwdnew");
-                Department = request.getParameter("fdepartment");
+                Department = request.getParameter("fdepartmentR");
 
                 Class.forName("oracle.jdbc.OracleDriver");
                 Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");

@@ -12,7 +12,7 @@ try {
     String Sname,Sid,Smail,Sphone,Sdepartment,year;
     year=request.getParameter("Syear");
     Sname=request.getParameter("sname");
-    Sid=request.getParameter("sid");
+    Sid=(request.getParameter("sid")).toUpperCase();
     Smail=request.getParameter("smail");
     Sphone=request.getParameter("sphone");
     Sdepartment=request.getParameter("sdepartment");

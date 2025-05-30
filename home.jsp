@@ -18,12 +18,7 @@
 <%
 	String name = (String) session.getAttribute("nameDisplay");
 	String department = ((String) session.getAttribute("department")).toUpperCase();
-    String[] departments = department.split("AND");
-    String dept1 = departments.length > 0 ? departments[0] : "";
-    String dept2 = departments.length > 1 ? departments[1] : "";
-    String dept3 = departments.length > 2 ? departments[2] : "";
-	String dept4 = departments.length > 3 ? departments[3] : "";
-    String dept5 = departments.length > 4 ? departments[4] : "";
+	if(department=="MCA" || department=="MSC" || department=="MBA" || department=="BCA"){
 %>
     <h1 style="color:black; margin-left:30px;">Welcome, <%= name %>!</h1>
     <br><br><br>
@@ -34,8 +29,30 @@
       		<form method="post">
     <select id="Selectdepartment" name="Selectdepartment" style="color: black; font-size: 18px; border-radius:10px; padding:5px 5px;" required>
         <option value="" disabled selected hidden>Select Department</option>
-        <% if (!department.trim().isEmpty()) { %>
             <option value="<%= department %>"><%= department %></option>
+<% 
+	}
+	else {
+%>
+		<h1 style="color:black; margin-left:30px;">Welcome, <%= name %>!</h1>
+	    <br><br><br>
+	    <div id="hiddenDept">
+	        <center><h1 style="margin-bottom: 5px;" id="mcaSelect">Select Department</h1></center>
+	        <center><h2 style="color:brown" id="mcaSelect2">To mark Attendance</h2></center><br><br>
+	        <center>
+	      		<form method="post">
+	    <select id="Selectdepartment" name="Selectdepartment" style="color: black; font-size: 18px; border-radius:10px; padding:5px 5px;" required>
+	    <option value="" disabled selected hidden>Select Department</option>
+<%	    
+		String[] departments = department.split("AND");
+		String dept1 = departments.length > 0 ? departments[0] : "";
+		String dept2 = departments.length > 1 ? departments[1] : "";
+		String dept3 = departments.length > 2 ? departments[2] : "";
+		String dept4 = departments.length > 3 ? departments[3] : "";
+		String dept5 = departments.length > 4 ? departments[4] : "";
+%>
+		<% if (!dept1.trim().isEmpty()) { %>
+            <option value="<%= dept1 %>"><%= dept1 %></option>
         <% } %>
         <% if (!dept2.trim().isEmpty()) { %>
             <option value="<%= dept2 %>"><%= dept2 %></option>
@@ -48,7 +65,7 @@
         <% } %>
         <% if (!dept5.trim().isEmpty()) { %>
             <option value="<%= dept5 %>"><%= dept5 %></option>
-        <% } %>
+        <% } }%>
     </select>
     <button type="submit" style="background-color: green; margin-left:20px;">Submit</button>
 	</form>  		
@@ -77,7 +94,7 @@
         <center><h1 style="margin-bottom: 5px;" id="mcaSelect">Select Semister</h1></center>
         <center><h2 style="color:brown" id="mcaSelect2">To mark Attendance</h2></center><br><br>
         <a style="margin-left: 350px;" href="FirstSem.jsp">MCA 1st Sem</a>
-        <a href="attandace.html">MCA 2nd Sem</a>
+        <a href="attandace.jsp">MCA 2nd Sem</a>
         <a href="SecondSem.jsp">MCA 3rd Sem</a>
         <a href="ThirdSem.jsp">MCA 4th Sem</a>
     </div>

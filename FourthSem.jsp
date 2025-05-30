@@ -20,34 +20,39 @@
 			  <span class="close" onclick="closeF_RegisterModal()">&times;</span>
 			  <center><span style="color:red; font-size:14px;">"If 2025-2026 batch then enter : 2526"</span></center>
 			  <form method="post">
-				<input type="tel" placeholder="Enter new Joining years" maxlength="4" pattern="[0-9]{4}" id="semYears" name="semYears"/>
+				<input type="tel" placeholder="Enter new Joining years" maxlength="4" pattern="[0-9]{4}" id="semYears4" name="semYears4"/>
 			  	<button type="submit">Update</button>
 			  </form>
 			</div>
 		  </div>
 		</div>
     <br>
-    <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;">MCA Department 2024 - 2026</h2></center>
+    <%
+    try
+    {
+    	String dept = (String) session.getAttribute("dept").toString();
+    	String dept4 = dept+"4sem";
+    	Class.forName("oracle.jdbc.OracleDriver");
+    	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");
+    	PreparedStatement p =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
+        p.setString(1, dept4.toLowerCase());
+        ResultSet r = p.executeQuery();
+        int joining4=2425;
+        if(r.next()){
+        	joining4 = r.getInt("jyear");
+        }
+        
+    %>
+    <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;"><%= dept %> Department <%= joining4 %></h2></center>
     <br>
     <center><h2 style="color:red; font-size: 25px; ">Mark the Attendance</h2></center><br>
     <h2 style="margin: 18px 20px 0px 100px; display: inline;">Today Date :</h2><h2 id="todaydate" name="todaydate" style="margin: 0px; padding: opx; display: inline; color: brown;"></h2><br><br>
-    <form id="attandance" action="main_attendance.jsp" method="POST" name="attandancemain" onsubmit="return check()">
+    <form id="attandance" action="<%= dept %>_attendance_record.jsp" method="POST" name="attandancemain" onsubmit="return check()">
     <h2 style="display: inline;  margin-left: 100px;">Select Date :</h2><input style="margin-left: 20px; font-size: 17px; color: black; padding: 5px 5px; height: 23px;" placeholder="Format : DD_MM_YYYY" type="text" id="getdatevalue"name="getdatevalue"><br><br>
     <h2 style="display: inline; margin-left: 100px; margin-right: 20px;">Select Subject :</h2>
-    <select id="subject" name="subject" style="width: 200px; padding: 5px 5px; font-size: 16px;">
+    <select id="subject4sem" name="subject4sem" style="width: 200px; padding: 5px 5px; font-size: 16px;">
       <option value="" disabled selected hidden>Select Subject</option>
-      <option value="FLAT">FLAT</option>
-      <option value="Computer Networks">Computer Networks</option>
-      <option value="DBMS">DBMS</option>
-      <option value="Web programming">Web Programming</option>
-      <option value="AI">AI</option>
-      <option value="IRS">IRS</option>
-      <option value="DAA">DAA</option>
-      <option value="OE Non conventional">OE Non conventional</option>
-      <option value="OE Entrepreneurship">OE Entrepreneurship</option>
-      <option value="WP Lab">WP Lab</option>
-      <option value="DBMS Lab">DBMS Lab</option>
-      <option value="CN Lab">CN Lab</option>
+      <option value="dont know">don't know</option>
     </select>
     <br><br>
     <center><span style="color: red;">("Press Tab to move for next Roll no. and press SpaceBar to Mark the Checkbox")</span></center>
@@ -218,32 +223,43 @@
   <label class="student"><input type="checkbox" name="99"><span class="testing" id="1099" name="1099"></span></label>
 </div>
     <%
-    try
-    {
-    
-    String dept = (String) session.getAttribute("dept");
-    String deptFull = dept+"1sem";
-    String semYears = request.getParameter("semYears");
-    int joiningYear = 2425;
-    Class.forName("oracle.jdbc.OracleDriver");
-    Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");
-    
-    if (semYears != null && !semYears.trim().isEmpty()) {
-        joiningYear = Integer.parseInt(semYears.trim());
+    session.setAttribute("dept4", dept4);
+    session.setAttribute("joining4", joining4);
+    String semYears4 = request.getParameter("semYears4");
+    int joiningYear4 = 2425;
+    if (semYears4 != null && !semYears4.trim().isEmpty()) {
+        joiningYear4 = Integer.parseInt(semYears4.trim());
 		PreparedStatement ps=con.prepareStatement("update semester_year set joining_year = ? where department = ?");
-		ps.setInt(1, joiningYear);
-		ps.setString(2, deptFull.toLowerCase());
+		ps.setInt(1, joiningYear4);
+		ps.setString(2, dept4.toLowerCase());
 		ps.executeUpdate();
+		
+		PreparedStatement ps2 =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
+        ps2.setString(1, dept4.toLowerCase());
+        ResultSet rs1 = ps2.executeQuery();
+        if(rs1.next()){
+        	joiningYear4 = rs1.getInt("jyear");
+        }
+		
+        String AttendancetableName = "attendance_" + dept4 + "_" + joiningYear4;
+        Statement stmt1 = con.createStatement();
+        stmt1.executeUpdate("CREATE TABLE " + AttendancetableName + " (" +
+            "S_NO NUMBER NOT NULL, " +
+            "Class_Date varchar2(20) NOT NULL, " +
+            "Status NUMBER(1))");
+
+		
+        String Sub_tableName = "classes_" + dept4 + "_" + joiningYear4;
+		String createSubTable = "CREATE TABLE " + Sub_tableName + " (" +
+				"Subject varchar2(30) NOT NULL, " +
+				"Class_Date varchar2(20) NOT NULL, " +
+				"class_Status NUMBER(1) )";
+		Statement stmt = con.createStatement();
+		stmt.executeUpdate(createSubTable);
+		out.println("<script>alert('Updated succesfully')</script>");
 	}
-    
-    PreparedStatement ps2=con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
-    ps2.setString(1, deptFull.toLowerCase());
-    ResultSet rs1 = ps2.executeQuery();
-    if(rs1.next()){
-    	joiningYear = rs1.getInt("jyear");
-    }
-    
-    PreparedStatement ps1 = con.prepareStatement("select s_name, s_no from student_register_" + dept + "_" + joiningYear);
+
+    PreparedStatement ps1 = con.prepareStatement("select s_name, s_no from student_register_" + dept + "_" + joining4);
     ResultSet rs = ps1.executeQuery();
     int id2 = 1001;
     while (rs.next() && id2 <= 1099) {

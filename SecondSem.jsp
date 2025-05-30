@@ -20,7 +20,7 @@
 			  <span class="close" onclick="closeF_RegisterModal()">&times;</span>
 			  <center><span style="color:red; font-size:14px;">"If 2025-2026 batch then enter : 2526"</span></center>
 			  <form method="post">
-				<input type="tel" placeholder="Enter new Joining years" maxlength="4" pattern="[0-9]{4}" id="semYears3" name="semYears3"/>
+				<input type="tel" placeholder="Enter new Joining years" maxlength="4" pattern="[0-9]{4}" id="semYears2" name="semYears2"/>
 			  	<button type="submit">Update</button>
 			  </form>
 			</div>
@@ -31,38 +31,39 @@
     try
     {
     	String dept = (String) session.getAttribute("dept").toString();
-    	String dept3 = dept+"3sem";
+    	String dept2 = dept+"2sem";
     	Class.forName("oracle.jdbc.OracleDriver");
     	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");
     	PreparedStatement p =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
-        p.setString(1, dept3.toLowerCase());
+        p.setString(1, dept2.toLowerCase());
         ResultSet r = p.executeQuery();
-        int joining3=2425;
+        int joining2=2526;
         if(r.next()){
-        	joining3 = r.getInt("jyear");
+        	joining2 = r.getInt("jyear");
         }
+        
     %>
-    <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;"><%= dept %> Department <%= joining3 %></h2></center>
+    <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;"><%= dept %> Department <%= joining2 %></h2></center>
     <br>
     <center><h2 style="color:red; font-size: 25px; ">Mark the Attendance</h2></center><br>
     <h2 style="margin: 18px 20px 0px 100px; display: inline;">Today Date :</h2><h2 id="todaydate" name="todaydate" style="margin: 0px; padding: opx; display: inline; color: brown;"></h2><br><br>
     <form id="attandance" action="<%= dept %>_attendance_record.jsp" method="POST" name="attandancemain" onsubmit="return check()">
     <h2 style="display: inline;  margin-left: 100px;">Select Date :</h2><input style="margin-left: 20px; font-size: 17px; color: black; padding: 5px 5px; height: 23px;" placeholder="Format : DD_MM_YYYY" type="text" id="getdatevalue"name="getdatevalue"><br><br>
     <h2 style="display: inline; margin-left: 100px; margin-right: 20px;">Select Subject :</h2>
-    <select id="subject3sem" name="subject3sem" style="width: 200px; padding: 5px 5px; font-size: 16px;">
+    <select id="subject2sem" name="subject2sem" style="width: 200px; padding: 5px 5px; font-size: 16px;">
       <option value="" disabled selected hidden>Select Subject</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know">dont know</option>
-      <option value="dont know lab">dont know lab</option>
-      <option value="dont know lab">dont know lab</option>
-      <option value="dont know lab">dont know lab</option>
+      <option value="FLAT">FLAT</option>
+      <option value="Computer Networks">Computer Networks</option>
+      <option value="DBMS">DBMS</option>
+      <option value="Web programming">Web Programming</option>
+      <option value="AI">AI</option>
+      <option value="IRS">IRS</option>
+      <option value="DAA">DAA</option>
+      <option value="OE Non conventional">OE Non conventional</option>
+      <option value="OE Entrepreneurship">OE Entrepreneurship</option>
+      <option value="WP Lab">WP Lab</option>
+      <option value="DBMS Lab">DBMS Lab</option>
+      <option value="CN Lab">CN Lab</option>
     </select>
     <br><br>
     <center><span style="color: red;">("Press Tab to move for next Roll no. and press SpaceBar to Mark the Checkbox")</span></center>
@@ -233,25 +234,25 @@
   <label class="student"><input type="checkbox" name="99"><span class="testing" id="1099" name="1099"></span></label>
 </div>
     <%
-    session.setAttribute("dept3", dept3);
-    session.setAttribute("joining3", joining3);
-    String semYears3 = request.getParameter("semYears3");
-    int joiningYear3 = 2425;
-    if (semYears3 != null && !semYears3.trim().isEmpty()) {
-        joiningYear3 = Integer.parseInt(semYears3.trim());
+    session.setAttribute("dept2", dept2);
+    session.setAttribute("joining2", joining2);
+    String semYears2 = request.getParameter("semYears2");
+    int joiningYear2=2526;
+    if (semYears2 != null && !semYears2.trim().isEmpty()) {
+        joiningYear2 = Integer.parseInt(semYears2.trim());
 		PreparedStatement ps=con.prepareStatement("update semester_year set joining_year = ? where department = ?");
-		ps.setInt(1, joiningYear3);
-		ps.setString(2, dept3.toLowerCase());
+		ps.setInt(1, joiningYear2);
+		ps.setString(2, dept2.toLowerCase());
 		ps.executeUpdate();
 		
-		PreparedStatement ps2 =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
-        ps2.setString(1, dept3.toLowerCase());
-        ResultSet rs1 = ps2.executeQuery();
+		PreparedStatement ps1 =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
+        ps1.setString(1, dept2.toLowerCase());
+        ResultSet rs1 = ps1.executeQuery();
         if(rs1.next()){
-        	joiningYear3 = rs1.getInt("jyear");
+        	joiningYear2 = rs1.getInt("jyear");
         }
-		
-        String AttendancetableName = "attendance_" + dept3 + "_" + joiningYear3;
+        
+        String AttendancetableName = "attendance_" + dept2 + "_" + joiningYear2;
         Statement stmt1 = con.createStatement();
         stmt1.executeUpdate("CREATE TABLE " + AttendancetableName + " (" +
             "S_NO NUMBER NOT NULL, " +
@@ -259,7 +260,7 @@
             "Status NUMBER(1))");
 
 		
-        String Sub_tableName = "classes_" + dept3 + "_" + joiningYear3;
+        String Sub_tableName = "classes_" + dept2 + "_" + joiningYear2;
 		String createSubTable = "CREATE TABLE " + Sub_tableName + " (" +
 				"Subject varchar2(30) NOT NULL, " +
 				"Class_Date varchar2(20) NOT NULL, " +
@@ -268,8 +269,8 @@
 		stmt.executeUpdate(createSubTable);
 		out.println("<script>alert('Updated succesfully')</script>");
 	}
-    
-    PreparedStatement ps1 = con.prepareStatement("select s_name, s_no from student_register_" + dept + "_" + joining3);
+
+    PreparedStatement ps1 = con.prepareStatement("select s_name, s_no from student_register_" + dept + "_" + joining2);
     ResultSet rs = ps1.executeQuery();
     int id2 = 1001;
     while (rs.next() && id2 <= 1099) {

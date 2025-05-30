@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance Tracking System</title>
     <link href="attandance_styles.css" rel="stylesheet">
-    <link rel="icon" type="image" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
     </head>
 <body>
     <div id="header">
@@ -27,27 +27,39 @@
 		  </div>
 		</div>
     <br>
-    <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;">MCA Department 2024 - 2026</h2></center>
+    <%
+    try{
+    	String dept = (String) session.getAttribute("dept");
+    	String dept1 = dept+"1sem";
+    	Class.forName("oracle.jdbc.OracleDriver");
+    	Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");
+    	PreparedStatement p =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
+        p.setString(1, dept1.toLowerCase());
+        ResultSet r = p.executeQuery();
+        int joining1=2526;
+        if(r.next()){
+        	joining1 = r.getInt("jyear");
+        }
+        
+    %>
+    <center><h2 style="color:#15467a; text-decoration: underline; font-size: 28px;"><%= dept %> Department <%= joining1 %></h2></center>
     <br>
     <center><h2 style="color:red; font-size: 25px; ">Mark the Attendance</h2></center><br>
-    <h2 style="margin: 18px 20px 0px 100px; display: inline;">Today Date :</h2><h2 id="todaydate" name="todaydate" style="margin: 0px; padding: opx; display: inline; color: brown;"></h2><br><br>
-    <form id="attandance" action="main_attendance.jsp" method="POST" name="attandancemain" onsubmit="return check()">
+    <h2 style="margin: 18px 20px 0px 100px; display: inline;">Today Date :</h2><h2 id="todaydate" name="todaydate" style="margin: 0px; padding: 0px; display: inline; color: brown;"></h2><br><br>
+    <form id="attandance" action="<%= dept %>_attendance_record.jsp" method="POST" name="attandancemain" onsubmit="return check()">
     <h2 style="display: inline;  margin-left: 100px;">Select Date :</h2><input style="margin-left: 20px; font-size: 17px; color: black; padding: 5px 5px; height: 23px;" placeholder="Format : DD_MM_YYYY" type="text" id="getdatevalue"name="getdatevalue"><br><br>
     <h2 style="display: inline; margin-left: 100px; margin-right: 20px;">Select Subject :</h2>
-    <select id="subject" name="subject" style="width: 200px; padding: 5px 5px; font-size: 16px;">
+    <select id="subject1sem" name="subject1sem" style="width: 200px; padding: 5px 5px; font-size: 16px;">
       <option value="" disabled selected hidden>Select Subject</option>
-      <option value="FLAT">FLAT</option>
-      <option value="Computer Networks">Computer Networks</option>
-      <option value="DBMS">DBMS</option>
-      <option value="Web programming">Web Programming</option>
-      <option value="AI">AI</option>
-      <option value="IRS">IRS</option>
-      <option value="DAA">DAA</option>
-      <option value="OE Non conventional">OE Non conventional</option>
-      <option value="OE Entrepreneurship">OE Entrepreneurship</option>
-      <option value="WP Lab">WP Lab</option>
-      <option value="DBMS Lab">DBMS Lab</option>
-      <option value="CN Lab">CN Lab</option>
+      <option value="OS">Operating System</option>
+      <option value="CO">Computer Organization</option>
+      <option value="DS">Data Structures & Algorithms</option>
+      <option value="OOPS">OOPS</option>
+      <option value="Management Accounts">Management Accounts</option>
+      <option value="OR">Operational Research</option>
+      <option value="DS Lab">DS Lab</option>
+      <option value="OS Lab">OS Lab</option>
+      <option value="CO Lab">CO Lab</option>
     </select>
     <br><br>
     <center><span style="color: red;">("Press Tab to move for next Roll no. and press SpaceBar to Mark the Checkbox")</span></center>
@@ -218,32 +230,26 @@
   <label class="student"><input type="checkbox" name="99"><span class="testing" id="1099" name="1099"></span></label>
 </div>
     <%
-    try
-    {
-    
-    String dept = (String) session.getAttribute("dept");
-    String deptFull = dept+"1sem";
+    session.setAttribute("dept1", dept1);
+	 session.setAttribute("joining1", joining1);
     String semYears = request.getParameter("semYears");
-    int joiningYear = 2526;
-    Class.forName("oracle.jdbc.OracleDriver");
-    Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE","AP","chandukittu");
-    
+    int joiningYear1 = 2526;
     if (semYears != null && !semYears.trim().isEmpty()) {
-        joiningYear = Integer.parseInt(semYears.trim());
+        joiningYear1 = Integer.parseInt(semYears.trim());
 		PreparedStatement ps=con.prepareStatement("update semester_year set joining_year = ? where department = ?");
-		ps.setInt(1, joiningYear);
-		ps.setString(2, deptFull.toLowerCase());
+		ps.setInt(1, joiningYear1);
+		ps.setString(2, dept1.toLowerCase());
 		ps.executeUpdate();
+		
+		PreparedStatement ps2 =con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
+        ps2.setString(1, dept1.toLowerCase());
+        ResultSet rs1 = ps2.executeQuery();
+        if(rs1.next()){
+        	joiningYear1 = rs1.getInt("jyear");
+        }
 	}
-    
-    PreparedStatement ps2=con.prepareStatement("SELECT joining_year AS jyear FROM semester_year where department = ?");
-    ps2.setString(1, deptFull.toLowerCase());
-    ResultSet rs1 = ps2.executeQuery();
-    if(rs1.next()){
-    	joiningYear = rs1.getInt("jyear");
-    }
-    
-    PreparedStatement ps1 = con.prepareStatement("select s_name, s_no from student_register_" + dept + "_" + joiningYear);
+   
+    PreparedStatement ps1 = con.prepareStatement("select s_name, s_no from student_register_" + dept + "_" + joining1);
     ResultSet rs = ps1.executeQuery();
     int id2 = 1001;
     while (rs.next() && id2 <= 1099) {
@@ -258,14 +264,16 @@
 <%
         id2++;
      }
- }
-catch(Exception ex)
-{
-    out.println("<script>alert('error "+ex.getMessage()+"')</script>");
-}
 %>
       <br><br>
       <center>
+<% 
+    }
+    catch(Exception ex)
+    {
+        out.println("<script>alert('error "+ex.getMessage()+"')</script>");
+    }
+%>
          <input style="margin-right: 150px;" type="reset" value="Reset?" class="reset_button"/>
          <input type="submit" value="Submit The Attandance?" class="submit_button"/>
       </center>
