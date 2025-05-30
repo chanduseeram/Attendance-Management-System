@@ -166,7 +166,6 @@ try {
         int present_days = rs.getInt("present_days");
         double percentage = rs.getDouble("percentage");
         String statusText = percentage >= 75 ? "Eligible" : "Not eligible";
-        String color = percentage >= 75 ? "green" : "red";
 %>
 <tr>
   <td style="text-align: left;"><%= s_name %></td>
@@ -174,7 +173,7 @@ try {
   <td><%= total_days_count %></td>
   <td><%= present_days %></td>
   <td><%= percentage %>%</td>
-  <td style="color:<%= color %>;"><%= statusText %></td>
+  <td class="<%= percentage >= 75 ? "eligible" : "not-eligible" %>"><%= statusText %></td>
 </tr>
 <%
     }
