@@ -11,7 +11,7 @@
     </head>
 <body>
     <div id="header">
-			<div id="logo"> <img src="logo.png" height="100" width="150" alt="Page Logo"></div>
+			<div id="logo"> <img src="logo.png" height="100" width="120" alt="Page Logo"></div>
 			<div><h3 style="font-size: 30px; margin-right: 150px; word-spacing: 10px;">ATTENDANCE MANAGEMENT SYSTEM</h3></div>
 			<button onclick="openF_RegisterModal()" type="submit">Semester update??</button>
 			<div id="SemUpdate" class="modal">

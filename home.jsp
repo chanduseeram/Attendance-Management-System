@@ -11,7 +11,7 @@
 </head>
 <body class="bodytag">
     <div id="header">
-			<div id="logo"> <img src="logo.png" height="100" width="150" alt="Page Logo"></div>
+			<div id="logo"> <img src="logo.png" height="100" width="120" alt="Page Logo"></div>
 			<div><h3 style="font-size: 30px; margin-right: 350px; word-spacing: 10px;">ATTENDANCE MANAGEMENT SYSTEM</h3></div>
 		</div>
     </div><br>
