@@ -19,6 +19,10 @@
   display: flex;
 }
 
+input[type="checkbox"]{
+	accent-color:#008000;
+}
+
 #logo{
   margin-right: 20px;
   margin-left: 320px;
